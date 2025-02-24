@@ -7,6 +7,8 @@ class Company(models.Model):
     bio=models.TextField(blank=True,null=True)
     # tags=models.ManyToManyField('Tag',blank=True)
     website=models.CharField(max_length=200,blank=True,null=True)
+    linkedin=models.CharField(max_length=1000,null=True,blank=True)
+    twitter=models.CharField(max_length=1000,null=True,blank=True)
 
     def __str__(self):
         return self.name
@@ -14,12 +16,12 @@ class Company(models.Model):
 class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
     avatat=models.ImageField(default='',upload_to='',blank=True,null=True)
-    name=models.CharField(max_length=100)
+    name=models.CharField(max_length=200,null=True,blank=True,default='No Name')
     socials=models.ManyToManyField('Social',blank=True)
     skills=models.ManyToManyField('Skill',blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.user.username)
 
 class Review(models.Model):
     owner=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
@@ -52,7 +54,7 @@ class Post(models.Model):
     body=models.TextField()
     like=models.ManyToManyField(User,related_name='likes',blank=True)
     
-    created=models.DateTimeField(auto_now_add=True)
+    created=models.DateTimeField(auto_now=True,null=True,blank=True)
     # title=models.CharField(max_length=200)
 
     def __str__(self):
@@ -65,7 +67,9 @@ class Post(models.Model):
 class Comment(models.Model):
     owner=models.ForeignKey(User,models.CASCADE,blank=True,null=True)
     post=models.ForeignKey(Post,models.CASCADE,blank=True,null=True)
-    body=models.TextField()
+    body=models.TextField(null=True,blank=True,default='Test')
+    created=models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.body[0:50]
+
