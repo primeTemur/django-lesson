@@ -19,6 +19,13 @@ def getPosts(request):
     serializers=PostSerializer(posts,many=True)
     return Response(serializers.data)
 
+@api_view(['POST'])
+def addtPosts(request):
+    data=request.data
+    user=request.user
+    Post.objects.create()
+    
+    return Response('Post was created')
 
 @api_view(['GET'])
 def getPost(request,pk):
