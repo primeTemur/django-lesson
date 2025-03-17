@@ -6,8 +6,11 @@ urlpatterns = [
     path('posts/',views.getPosts),
     path('posts/<str:pk>/',views.getPost),
     path('users/',views.getUsers),
+    path('users/recommended/',views.getRecommendedUsers),
     path('users/<str:username>/',views.getUser),
 
     path('companies/',views.getCompanies),
     path('company/<str:pk>/',views.getCompany),
+
+    path('openings/',views.getLatestJobs),
 ]

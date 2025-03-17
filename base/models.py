@@ -31,6 +31,7 @@ class Profile(models.Model):
     name=models.CharField(max_length=200,null=True,blank=True,default='No Name')
     socials=models.ManyToManyField('Social',blank=True)
     skills=models.ManyToManyField('Skill',blank=True)
+    verified=models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user.username)

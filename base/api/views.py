@@ -33,6 +33,14 @@ def getUsers(request):
     serializers=ProfileSerializer(users,many=True)
     return Response(serializers.data)
 
+
+@api_view(['GET'])
+def getRecommendedUsers(request):
+    users=Profile.objects.filter(verified=True).order_by('?')
+    serializers=ProfileSerializer(users,many=True)
+    return Response(serializers.data)
+
+
 @api_view(['GET'])
 def getUser(request,username):
     user=Profile.objects.get(user__username=username)
