@@ -3,7 +3,7 @@ from django.contrib.auth.models import  User
 
 class Company(models.Model):
     name=models.CharField(max_length=100)
-    logo=models.ImageField(default='',upload_to='',blank=True,null=True)
+    logo=models.ImageField(default='',upload_to='/logos',blank=True,null=True)
     bio=models.TextField(blank=True,null=True)
     # tags=models.ManyToManyField('Tag',blank=True)
     website=models.CharField(max_length=200,blank=True,null=True)
@@ -62,13 +62,13 @@ class Post(models.Model):
         ('job','job'),
         ('default','default'),
     )
+
     owmer=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     post_type=models.CharField(choices=OPTIONS,default=OPTIONS[2],max_length=100)
+    # title=models.CharField(max_length=200,null=True,blank=True)
     body=models.TextField()
     like=models.ManyToManyField(User,related_name='likes',blank=True)
-    
     created=models.DateTimeField(auto_now=True,null=True,blank=True)
-    # title=models.CharField(max_length=200)
 
     def __str__(self):
         return self.body[0:50]
