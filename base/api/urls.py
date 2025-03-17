@@ -9,4 +9,5 @@ urlpatterns = [
     path('users/<str:username>/',views.getUser),
 
     path('companies/',views.getCompanies),
+    path('company/<str:pk>/',views.getCompany),
 ]

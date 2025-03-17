@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from base.models import Post,Profile,Company
-from .serializers import PostSerializer,UserSerializer,ProfileSerializer,CompanySerializer
+from base.models import Post,Profile,Company,JobOpening
+from .serializers import PostSerializer,UserSerializer,ProfileSerializer,CompanySerializer,JobOpeningSerializer
 from django.contrib.auth.models import  User
 
 
@@ -42,4 +42,16 @@ def getUser(request,username):
 @api_view(['GET'])
 def getCompanies(request):
     serializers=CompanySerializer(Company.objects.all(),many=True)
+    return Response(serializers.data)
+
+
+@api_view(['GET'])
+def getCompany(request,pk):
+    serializers=CompanySerializer(Company.objects.get(id=pk),many=False)
+    return Response(serializers.data)
+
+@api_view(['GET'])
+def getLatestJobs(request):
+    jobs=JobOpening.objects.all().order_by('-created')[0:10]
+    serializers=JobOpeningSerializer(jobs,many=True)
     return Response(serializers.data)
